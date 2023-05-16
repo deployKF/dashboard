@@ -14,7 +14,7 @@ env:
   IMAGE_TITLE: "dashboard"
   IMAGE_DESCRIPTION: "Dashboard for deployKF"
   IMAGE_FOLDER: "dashboard"
-  IMAGE_PLATFORMS: |
+  IMAGE_PLATFORMS: |-
     linux/amd64
     linux/arm64
 
@@ -52,7 +52,7 @@ jobs:
             ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_TITLE }}
             docker.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_TITLE }}
           flavor: |
-            latest=true
+            latest=false
           tags: |
             type=semver,priority=200,pattern={{major}}.{{minor}}
             type=semver,priority=100,pattern={{version}}

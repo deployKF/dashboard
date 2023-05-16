@@ -12,7 +12,7 @@ env:
   IMAGE_OWNER: "deploykf"
   IMAGE_TITLE: "dashboard"
   IMAGE_FOLDER: "dashboard"
-  IMAGE_PLATFORMS: |
+  IMAGE_PLATFORMS: |-
     linux/amd64
     linux/arm64
 
@@ -43,7 +43,7 @@ jobs:
           images: |
             ghcr.io/${{ env.IMAGE_OWNER }}/ci/${{ env.IMAGE_TITLE }}
           flavor: |
-            latest=true
+            latest=false
           tags: |
             type=sha,priority=200,prefix=sha-,format=short
             type=sha,priority=100,prefix=sha-,format=long
