@@ -1,13 +1,12 @@
-name: Build PR
+name: Build Commit
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.number }}
-  cancel-in-progress: true
+permissions:
+  packages: write
 
 env:
   IMAGE_OWNER: "deploykf"
@@ -18,7 +17,7 @@ env:
     linux/arm64
 
 jobs:
-  build_image:
+  build_and_push_image:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,21 +29,32 @@ jobs:
       - name: Install Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Generate Image Tags/Labels
         id: meta
         uses: docker/metadata-action@v4
         with:
           images: |
             ghcr.io/${{ env.IMAGE_OWNER }}/ci/${{ env.IMAGE_TITLE }}
+          flavor: |
+            latest=true
           tags: |
-            type=ref,event=pr,prefix=pr-,suffix=
+            type=sha,priority=200,prefix=sha-,format=short
+            type=sha,priority=100,prefix=sha-,format=long
 
-      - name: Build Image
+      - name: Build and Push Image
         uses: docker/build-push-action@v4
         with:
           context: ./${{ env.IMAGE_FOLDER }}
-          push: false
+          push: true
           platforms: ${{ env.IMAGE_PLATFORMS }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=ghcr.io/${{ env.IMAGE_OWNER }}/ci/${{ env.IMAGE_TITLE }}
+          cache-to: type=registry,ref=ghcr.io/${{ env.IMAGE_OWNER }}/ci/${{ env.IMAGE_TITLE }},mode=max

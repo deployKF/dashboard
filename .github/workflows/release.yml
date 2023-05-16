@@ -10,6 +10,7 @@ permissions:
   packages: write
 
 env:
+  IMAGE_OWNER: "deploykf"
   IMAGE_TITLE: "dashboard"
   IMAGE_DESCRIPTION: "Dashboard for deployKF"
   IMAGE_FOLDER: "dashboard"
@@ -48,10 +49,10 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_TITLE }}
-            deploykf/${{ env.IMAGE_TITLE }}
+            ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_TITLE }}
+            docker.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_TITLE }}
           flavor: |
-            latest=false
+            latest=true
           tags: |
             type=semver,priority=200,pattern={{major}}.{{minor}}
             type=semver,priority=100,pattern={{version}}
@@ -69,8 +70,8 @@ jobs:
           platforms: ${{ env.IMAGE_PLATFORMS }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/ci/${{ env.IMAGE_TITLE }}
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository_owner }}/ci/${{ env.IMAGE_TITLE }},mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ env.IMAGE_OWNER }}/ci/${{ env.IMAGE_TITLE }}
+          cache-to: type=registry,ref=ghcr.io/${{ env.IMAGE_OWNER }}/ci/${{ env.IMAGE_TITLE }},mode=max
 
       - name: Create GitHub Release
         uses: actions/github-script@v6
