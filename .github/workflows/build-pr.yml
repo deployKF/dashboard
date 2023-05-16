@@ -13,7 +13,7 @@ env:
   IMAGE_OWNER: "deploykf"
   IMAGE_TITLE: "dashboard"
   IMAGE_FOLDER: "dashboard"
-  IMAGE_PLATFORMS: |
+  IMAGE_PLATFORMS: |-
     linux/amd64
     linux/arm64
 
