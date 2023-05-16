@@ -1,0 +1,49 @@
+name: Build PR
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.number }}
+  cancel-in-progress: true
+
+env:
+  IMAGE_TITLE: "dashboard"
+  IMAGE_FOLDER: "dashboard"
+  IMAGE_PLATFORMS: |
+    linux/amd64
+    linux/arm64
+
+jobs:
+  build_image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Install Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Generate Image Tags/Labels
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ghcr.io/${{ github.repository_owner }}/ci/${{ env.IMAGE_TITLE }}
+          tags: |
+            type=ref,event=pr,prefix=pr-,suffix=
+
+      - name: Build Image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./${{ env.IMAGE_FOLDER }}
+          push: false
+          platforms: ${{ env.IMAGE_PLATFORMS }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/ci/${{ inputs.IMAGE_TITLE }}
