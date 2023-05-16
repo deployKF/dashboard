@@ -55,5 +55,5 @@ jobs:
           platforms: ${{ env.IMAGE_PLATFORMS }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/ci/${{ inputs.IMAGE_TITLE }}
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/ci/${{ env.IMAGE_TITLE }}
           cache-to: type=registry,ref=ghcr.io/${{ github.repository_owner }}/ci/${{ env.IMAGE_TITLE }},mode=max
