@@ -242,9 +242,6 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
         let hideSidebar = false;
 
         switch (newPage) {
-        case 'logout':
-            window.top.location.href = '/logout';
-            break;
         case 'activity':
             this.page = 'activity';
             hideTabs = false;
