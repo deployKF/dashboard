@@ -51,7 +51,7 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_TITLE }}
             deploykf/${{ env.IMAGE_TITLE }}
           flavor: |
-            latest=false
+            latest=true
           tags: |
             type=semver,priority=200,pattern={{major}}.{{minor}}
             type=semver,priority=100,pattern={{version}}

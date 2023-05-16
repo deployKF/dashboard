@@ -42,7 +42,7 @@ jobs:
           images: |
             ghcr.io/${{ github.repository_owner }}/ci/${{ env.IMAGE_TITLE }}
           flavor: |
-            latest=false
+            latest=true
           tags: |
             type=sha,priority=200,prefix=sha-,format=short
             type=sha,priority=100,prefix=sha-,format=long
