@@ -8,7 +8,7 @@ paper-card#MainCard
             exit-animation='fade-out-animation')
         neon-animatable
             h2 Welcome
-            aside In order to use Kubeflow, a namespace for your account must be created. Follow the steps to get started
+            aside In order to use deployKF, a namespace for your account must be created. Follow the steps to get started
             .actions
                 paper-button(on-click='nextPage') Start Setup
         neon-animatable
@@ -23,6 +23,5 @@ paper-card#MainCard
     carousel-indicator(size=2, selected='{{page}}')
 
 nav#Links
-    a(href='https://github.com/kubeflow/kubeflow', tabindex='-1', target="_blank") GitHub
-    a(href='https://www.kubeflow.org/docs/about/kubeflow/', tabindex='-1', target="_blank") Documentation
-    a(href='https://policies.google.com/privacy', tabindex='-1', target="_blank") Privacy
+    a(href='https://www.deploykf.org/', tabindex='-1', target="_blank") deployKF Website
+    a(href='https://github.com/deployKF/deployKF', tabindex='-1', target="_blank") deployKF GitHub
