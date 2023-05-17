@@ -11,11 +11,9 @@ import '@polymer/paper-button/paper-button.js';
 export class LogoutButton extends PolymerElement {
     static get template() {
         return html`
-            <a href="{{logoutUrl}}">
-              <paper-button id="logout-button">
-                <iron-icon icon='kubeflow:logout' title="Logout"></iron-icon>
-              </paper-button>
-            </a>
+          <paper-button id="logout-button" on-tap="logout">
+            <iron-icon icon='kubeflow:logout' title="Logout"></iron-icon>
+          </paper-button>
         `;
     }
 
@@ -25,6 +23,13 @@ export class LogoutButton extends PolymerElement {
                 type: String,
             },
         };
+    }
+
+    /**
+     * Redirects to the logout url.
+     */
+    logout() {
+        window.top.location.href = this.logoutUrl;
     }
 }
 
