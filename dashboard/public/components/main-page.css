@@ -4,7 +4,7 @@
 
 :host {
     @apply --layout-vertical;
-    --accent-color: #ff6e42;
+    --accent-color: #007dfc;
     --primary-background-color: #0a3b71;
     --sidebar-default-color: rgba(255, 255, 255, 0.5);
     --divider-color: #dadce0;
@@ -25,6 +25,18 @@
 .scrollable {
     height: 100%;
     overflow: auto;
+}
+
+.scrollable::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+    height: 7px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(238, 238, 239, 0.5);
+    box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
 
 #MainDrawer {
