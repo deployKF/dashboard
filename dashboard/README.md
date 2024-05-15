@@ -7,16 +7,31 @@ It provides a jump-off point to all other tool Web UIs.
 
 ### Getting Started
 
-Make sure you have installed node 12 or 14.
+Make sure you have installed node 16!
 
-1. Run `cd dashboard`
-2. Run `make build-local` to install npm dependencies
-3. Run `npm run dev` to start the development server
-    - This runs [webpack](https://webpack.js.org/) over the front-end code in the [public](./public) folder.
-      It also starts the [webpack-dev-server](https://webpack.js.org/configuration/dev-server/) at http://localhost:8081.
-    - It also starts the Express API server at http://localhost:8082. 
-      Requests from the front-end starting with `/api` are proxied to the Express server. 
-      All other requests are handled by the front-end server which mirrors the production configuration.
+1. We STRONGLY recommend using [nvm](https://github.com/nvm-sh/nvm):
+     - Uninstall any Homebrew versions with `brew uninstall node` (or `node@XX`)
+     - Install `nvm` with `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash`
+     - Install node `16` with `nvm install 16`
+     - Use node `16` with `nvm use 16`
+     - Set node `16` as the default with `nvm alias default 16`
+2. Run `cd dashboard`
+3. Run `npm install` to install npm dependencies
+4. Run `./run_local.sh` to start the development server, this will:
+    - Run the following kubectl port-forwards:
+       - `localhost:8081` -> `kfam-api.deploykf-dashboard.svc`
+       - `localhost:8085` -> `jupyter-web-app-service.kubeflow.svc`
+       - `localhost:8087` -> `ml-pipeline-ui.kubeflow.svc`
+    - Run [webpack](https://webpack.js.org/) over the front-end code in the [public](./public) folder
+    - Run [webpack-dev-server](https://webpack.js.org/configuration/dev-server/) at http://localhost:8081
+    - Run the Express API server at http://localhost:8082
+    - Proxy requests from the front-end starting with `/api` to the Express server. 
+    - All other requests are handled by the front-end server which mirrors the production configuration.
+    - __TIP:__ if you see `bind: address already in use` errors, you might try `pkill -f "kubectl port-forward"` to stop all existing port-forwards
+5. Open your browser to `http://localhost:8080` to see the dashboard:
+    - You will need to inject your requrests with a `kubeflow-userid` header
+    - You can do this in Chrome by using the [Header Editor](https://chromewebstore.google.com/detail/eningockdidmgiojffjmkdblpjocbhgh) extension
+    - For example, set the `kubeflow-userid` header to `user1@example.com`
 
 ### Server Components
 
