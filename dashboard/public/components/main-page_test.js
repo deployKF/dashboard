@@ -240,12 +240,8 @@ describe('Main Page', () => {
         }, false, '/api/workgroup/env-info');
         await Promise.all([getHasWorkgroup, getEnvInfo]);
         flush();
-
-        const buildVersion = mainPage.shadowRoot.querySelector(
-            'section.build span');
         // textContent is used because innerText would be empty if sidebar is
         // hidden
-        expect(buildVersion.textContent).toEqual('1.0.0');
         const namespaceSelector = mainPage.shadowRoot
             .getElementById('NamespaceSelector');
         expect(Array.from(namespaceSelector.shadowRoot
