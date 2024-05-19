@@ -96,7 +96,6 @@ export class PipelinesCard extends utilitiesMixin(PolymerElement) {
      */
     _getListPipelinesUrl(artifactType, namespace) {
         if (!VALID_ARTIFACT_TYPES.has(artifactType)) return null;
-        if (namespace === undefined) return null;
         let link = `/pipeline/apis/v1beta1/${artifactType}?`
             + 'page_size=5&sort_by=created_at%20desc';
         if (artifactType === RUNS) {
