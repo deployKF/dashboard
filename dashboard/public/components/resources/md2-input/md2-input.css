@@ -1,7 +1,6 @@
 :host {
     --action-color: var(--google-grey-500);
     position: relative;
-    display: inline-block;
     padding-top: .5em;
 }
 :host([focused]) {
@@ -52,6 +51,7 @@ input {
     color: var(--action-color);
     @apply --paper-input-error;
     @apply --md2-error;
+    overflow-wrap: break-word;
 }
 .paper-material {
     display: inline-block;
